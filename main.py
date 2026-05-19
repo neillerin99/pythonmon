@@ -8,7 +8,8 @@ __author__ = "NEIL EDRIANE LERIN"
 from classes.pokemon import Pokemon
 import utils  # import utils module
 import pokedex  # import pokedex module
-import game
+import game # import game module
+from colorama import just_fix_windows_console, init
 
 
 def main_menu_selection(pokemons: list[Pokemon]):
@@ -40,6 +41,8 @@ def main_menu_selection(pokemons: list[Pokemon]):
 
 
 def main():
+    just_fix_windows_console() # colorama function to enable ANSI feature on windows consoles 
+    init(autoreset=True)
     utils.clear_terminal()
 
     pokemons: list[Pokemon] = []
