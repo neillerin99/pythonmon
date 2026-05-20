@@ -12,3 +12,4 @@ from classes.pokemon import Pokemon
 class Player:
     name: str  # name of the player
     pokemon: Pokemon  # selected Pokemon of the player
+    is_bot: bool = False # bot flag to identify if a player instance is a bot

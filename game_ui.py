@@ -5,6 +5,7 @@ This module handles the battle featuire UI
 __author__ = "NEIL EDRIANE LERIN"
 
 from colorama import Fore
+from classes.player import Player
 from utils import format_color, format_ability_color, format_hp
 
 MENU_WIDTH = 60
@@ -16,6 +17,16 @@ def display_header():
     print(format_color("=" * MENU_WIDTH, Fore.YELLOW))
     print(format_color("POKEMON BATTLE!".center(MENU_WIDTH), Fore.YELLOW))
     print(format_color("=" * MENU_WIDTH, Fore.YELLOW))
+
+
+def display_trainer_challenge(player: Player):
+    """
+    Display when doing single player battle
+    """
+    
+    print()
+    print(format_color(f"Trainer {player.name} challenged you!", Fore.LIGHTCYAN_EX))
+    print(format_color(f"Trainer {player.name} sent out {player.pokemon.name}!", Fore.LIGHTCYAN_EX))
 
 
 # NOTE: I have remove the type safety here because python will result in a circular import error (battle: Battle)
@@ -38,18 +49,22 @@ def display_battle_details(battle):
     print(hp_left + hp_right.rjust(MENU_WIDTH - len(plain_left)))
     print()
 
-    # printing of pokemon's abilities
-    print(format_color("-" * MENU_WIDTH, Fore.YELLOW))
-    print()
-    print(format_color(f"Trainer {battle.attacker.name}'s turn!", Fore.BLUE))
-    print(format_color(f"What will {battle.attacker.pokemon.name.upper()} do?", Fore.BLUE))
-    print()
-    
-    # dsplay pokemon ability details
-    for ability in battle.attacker.pokemon.abilities:
-        name = f"{ability.index} - {format_ability_color(ability)}"
-        stats = f"(DMG: {ability.damage} | ACC: {ability.accuracy}% | CRIT: {ability.critical}%)"
-        print(f"{name.ljust(30)}{stats}")
+    # print bot attack feature
+    if battle.attacker.is_bot:
+        print(f"Trainer {battle.attacker.name} is choosing a move...")
+    else:
+        # printing of pokemon's abilities
+        print(format_color("-" * MENU_WIDTH, Fore.YELLOW))
+        print()
+        print(format_color(f"Trainer {battle.attacker.name}'s turn!", Fore.BLUE))
+        print(format_color(f"What will {battle.attacker.pokemon.name.upper()} do?", Fore.BLUE))
+        print()
+        
+        # dsplay pokemon ability details
+        for ability in battle.attacker.pokemon.abilities:
+            name = f"{ability.index} - {format_ability_color(ability)}"
+            stats = f"(DMG: {ability.damage} | ACC: {ability.accuracy}% | CRIT: {ability.critical}%)"
+            print(f"{name.ljust(30)}{stats}")
 
     print()
     print(format_color("-" * MENU_WIDTH, Fore.YELLOW))

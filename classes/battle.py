@@ -13,7 +13,7 @@ from classes.abilities import Ability
 import utils
 import game_ui
 import random
-
+import time
 
 @dataclass
 class Battle:
@@ -60,6 +60,14 @@ class Battle:
                 return ability
 
 
+    def random_ability(self) -> int:
+        """
+        This function, returns a random index on the Pokemon's ability.
+        """
+        
+        return random.randint(1, len(self.attacker.pokemon.abilities))
+
+
     def calculate_damage(self, ability: Ability) -> int:
         """Calculates damage based on attacker and defender stats"""
         
@@ -80,12 +88,17 @@ class Battle:
         ability_choice: int | None  # variable to store the chosen ability of the pokemon
         game_ui.display_battle_details(self) # display battle details
 
-        # prompt user for ability choice
-        ability_choice: int | None = utils.validate_input("Enter ability id")
+        if self.attacker.is_bot == True:
+            time.sleep(2)
+            ability_choice = self.random_ability()
+            print(ability_choice)
+        else:
+            # prompt user for ability choice
+            ability_choice: int | None = utils.validate_input("Enter ability id")
 
-        # ability checker 
-        if ability_choice == None:
-            return self.handle_turn()
+            # ability checker 
+            if ability_choice == None:
+                return self.handle_turn()
 
         # find the ability on the on the pokemon's ability array
         ability = self.find_ability(ability_choice)
@@ -138,6 +151,9 @@ class Battle:
         playing: bool = True  # variable to flag playing state
 
         game_ui.display_header() # display game header
+        
+        if self.player2.is_bot :
+            game_ui.display_trainer_challenge(self.player2)
         
         # infinite loop for the battle sequence
         while playing == True:

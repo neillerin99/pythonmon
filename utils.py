@@ -94,7 +94,7 @@ def format_ability_color(ability: Ability) -> str:
         case TYPE.WATER:
             text = format_color(ability.name, Fore.BLUE)
         case TYPE.ELECTRIC:
-            text = format_color(ability.name, Fore.YELLOW)
+            text = format_color(ability.name, Fore.LIGHTYELLOW_EX)
         case TYPE.NORMAL:
             text = format_color(ability.name, Fore.WHITE)
         case _:
@@ -114,4 +114,5 @@ def format_hp(pokemon: Pokemon) -> str:
         hp_text = format_color(hp_text, Fore.RED)
     else: 
         hp_text = format_color(hp_text, Fore.GREEN)
+        
     return hp_text
