@@ -18,6 +18,7 @@ cd pythonmon
 2. Run the game
 
 ```bash
+pip install -r requirements.txt
 python main.py
 ```
 
